@@ -1,0 +1,13 @@
+{
+  "name": "Duxo's Skygen - Datapack",
+  "description": "The datapack for Duxo's Datapack!",
+  "require": ["bolt"],
+  "data_pack": {
+    "load": ["src"]
+  },
+  "pipeline": ["mecha"],
+  "output": "build",
+  "meta": {
+    "bolt": {"entrypoint": "skygen:main"}
+  }
+}
