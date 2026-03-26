@@ -62,6 +62,5 @@ function skygen:level/expcap:
     scoreboard players operation @s exp.temp *= 25 skygen
     scoreboard players operation @s exp2next = @s exp.temp
 
-function skygen:level/levelup:
 
 
