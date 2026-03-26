@@ -1,0 +1,66 @@
+append function_tag minecraft:tick {
+    "values": [
+        "skygen:tick"
+    ]
+}
+
+append function_tag minecraft:load {
+    "values": [
+        "skygen:load"
+    ]
+}
+
+
+function skygen:tick:
+    execute as @a run title @s actionbar [{"color":"green","text":"$"},{"color":"green","score":{"name":"@s","objective":"money"}},{"color":"light_purple","text":"   Level "},{"color":"dark_purple","score":{"name":"@s","objective":"level"}},{"color":"blue","text":" ("},{"color":"blue","score":{"name":"@s","objective":"exp"}},{"color":"blue","text":"/"},{"color":"blue","score":{"name":"@s","objective":"exp2next"}},{"color":"blue","text":")"}]
+
+    function skygen:teleport
+
+    scoreboard players add @a money 0
+    scoreboard players add @a level 0
+    scoreboard players add @a exp 0
+    scoreboard players add @a exp2next 0
+
+    execute at @e[tag=spawn] as @a[distance=..1.5] run execute in minecraft:overworld run tp @s 9 -60 173 -270 1
+
+    execute as @a run function skygen:level/expcap
+
+
+    scoreboard players set 10 skygen 10
+    scoreboard players set 25 skygen 25
+    scoreboard players set 100 skygen 100
+
+
+function skygen:load:
+    scoreboard objectives add money dummy
+    scoreboard objectives add level dummy
+    scoreboard objectives add exp dummy
+    scoreboard objectives add exp2next dummy
+    scoreboard objectives add exp.temp dummy
+
+    scoreboard objectives add skygen.temp dummy
+
+    scoreboard objectives add skygen.stim dummy
+    scoreboard objectives add skygen dummy
+
+# gift
+function skygen:money/gift:
+    $execute unless entity @s[scores={money=..$(gift)}] run tellraw $(player) [{"color":"green","text":"You have received a gift of $$(gift)"}]
+    $execute unless entity @s[scores={money=..$(gift)}] run scoreboard players add $(player) money $(gift)
+    $execute unless entity @s[scores={money=..$(gift)}] run scoreboard players remove @s money $(gift)
+    $execute unless entity @s[scores={money=$(gift)..}] run tellraw @s [{"color":"red","text":"Too Expensive! \n (You need $(gift) dollars to gift this much, you only have $"},{"score":{"name":"@s","objective":"money"}},"!)"]
+
+# macro for setting up shops
+function skygen:money/setupshop:
+    $execute if score @s money matches $(cost).. run give @s $(item) $(amount)
+    $execute if score @s money matches $(cost).. run scoreboard players remove @s money $(cost)
+    $execute unless score @s money matches $(cost).. run tellraw @p [{"color":"red","text":"Too Expensive! \n (You need $(cost) dollars to buy this, you only have $"},{"score":{"name":"@s","objective":"money"}},"!)"]
+
+# levels
+function skygen:level/expcap:
+    scoreboard players operation @s exp.temp = @s level
+    scoreboard players operation @s exp.temp *= @s exp.temp
+    scoreboard players operation @s exp.temp *= 25 skygen
+    scoreboard players operation @s exp2next = @s exp.temp
+
+function skygen:level/levelup:
