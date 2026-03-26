@@ -14,7 +14,6 @@ append function_tag minecraft:load {
 function skygen:tick:
     execute as @a run title @s actionbar [{"color":"green","text":"$"},{"color":"green","score":{"name":"@s","objective":"money"}},{"color":"light_purple","text":"   Level "},{"color":"dark_purple","score":{"name":"@s","objective":"level"}},{"color":"blue","text":" ("},{"color":"blue","score":{"name":"@s","objective":"exp"}},{"color":"blue","text":"/"},{"color":"blue","score":{"name":"@s","objective":"exp2next"}},{"color":"blue","text":")"}]
 
-    function skygen:teleport
 
     scoreboard players add @a money 0
     scoreboard players add @a level 0
@@ -64,3 +63,5 @@ function skygen:level/expcap:
     scoreboard players operation @s exp2next = @s exp.temp
 
 function skygen:level/levelup:
+
+

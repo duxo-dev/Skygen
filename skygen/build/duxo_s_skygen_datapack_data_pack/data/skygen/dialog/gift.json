@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:dialog_list",
+  "title": "Gift",
+  "inputs": [
+    {
+      "type": "minecraft:number_range",
+      "key": "gift",
+      "width": 350,
+      "label": "Gift Amount",
+      "start": 1,
+      "end": 1000,
+      "step": 1,
+      "initial": 1
+    },
+    {
+      "type": "minecraft:text",
+      "key": "player",
+      "label": "Who to gift? \n (You can do Offline Players!)",
+      "label_visible": true
+    }
+  ],
+  "can_close_with_escape": true,
+  "after_action": "close",
+  "exit_action": {
+    "label": "Done",
+    "action": {
+      "type": "minecraft:dynamic/run_command",
+      "template": "execute as @s run function skygen:money/gift {gift: \"$(gift)\", player: \"$(player)\"}"
+    }
+  },
+  "dialogs": []
+}
